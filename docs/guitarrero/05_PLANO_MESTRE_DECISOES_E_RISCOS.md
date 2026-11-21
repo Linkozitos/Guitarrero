@@ -6,10 +6,10 @@ Registro oficial do projeto. Atualizado pelo Claude a cada entrega. Última atua
 
 | Campo | Valor |
 |---|---|
-| Etapa atual | Etapa 3 — Setup do repositório (PC pronto; prompt revisão 2 pronto) |
-| Último portão aprovado | G0 — Configuração concluída (21/11) |
+| Etapa atual | Etapa 4.1 — Timbre · Fatia 1 (bancada segura e controle duplo): preparar o prompt |
+| Último portão aprovado | G1 — Base do aplicativo aprovada pelo Link (21/11) |
 | Bloqueio | Nenhum |
-| Próximo passo | Link: na janela do Claude Code aberta em F:\Claude Code\Guitarreiro, digitar /effort max e colar o prompt da Etapa 3 (revisão 2). O Claude Code faz o resto; depois o gestor lê o relatório em _relatorios\ e confere o CI |
+| Próximo passo | Claude: escrever o prompt da Fatia 1 (Etapa 4.1), já com as decisões D-09 e D-10, numa conversa nova do Projeto Guitarrero. Link: colar o prompt no Claude Code quando estiver pronto |
 
 ## 2. Roadmap com portões
 
@@ -70,7 +70,8 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 | D-07 | Constantes do código incluídas nos contratos | Manter como está | Registrada |
 | D-08 | Importador aceita backups antigos e migra para o formato novo | Ampliar: aceitar TONELAB_V5_0, TONELAB_V7_5 e projetos do TAB (tab_simplifier_pro_yousician_v4) | Proposta (ampliação de 21/11) |
 | ADR-006 | Camadas por módulo: core puro compartilhado; audio, persistence e services compartilhados; cada módulo com domain, audio, persistence, state e ui; @tauri-apps só nas camadas persistence; um módulo nunca importa o outro (detalhe no CLAUDE.md) | Decisão técnica do Claude, dentro da arquitetura aprovada (ADR-004); corrige a versão anterior do CLAUDE.md, que punha a persistência no núcleo sem Tauri | Registrada (21/11) |
-| D-09 | Onde o app guarda os dados do Link (presets, sessões, amostras): pasta padrão do Windows para apps (%APPDATA%\com.linkozitos.guitarrero) ou dentro de F:\Claude Code\Guitarreiro | Pasta padrão do Windows, com Exportar/Importar para qualquer pasta que o Link escolher | Pendente: decidir antes da Fatia 1 |
+| D-09 | Onde o app guarda os dados do Link (presets, sessões, amostras): pasta padrão do Windows para apps (%APPDATA%\com.linkozitos.guitarrero) ou dentro de F:\Claude Code\Guitarreiro | Pasta padrão do Windows, com Exportar/Importar para qualquer pasta que o Link escolher | Aprovada pelo Link (21/11) |
+| D-10 | Tamanho da janela: a tela do Link tem 1920×1080 com escala de 125% (área útil de 1536×816 px lógicos) e a janela de 1440×900 não cabia; os 66 px de baixo ficavam atrás da barra de tarefas | Abrir maximizada, com mínimo de 1280×720, e desenhar as telas para a área interna da janela maximizada (cerca de 1536×785) | Aprovada pelo Link (21/11) |
 
 ## 4. Matriz de riscos
 
@@ -106,3 +107,4 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 - 21/11/2026 — Link conclui a preparação do PC: o instalador automático deu OK nos 9 itens e o repositório foi baixado em F:\Claude Code\Guitarreiro.
 - 21/11/2026 — G-09 (Regra 0) registrada nas Instruções, na Memória e no CLAUDE.md. Prompt da Etapa 3 revisado e blindado (revisão 2): retomada automática, pasta temporária para o template, comandos não interativos, CSP com o canal interno do Tauri e política de desenvolvimento, fim de linha LF, versões exatas, prova das regras de camada, branch etapa-3-base, relatório em _relatorios\ e verificação do título da janela. CLAUDE.md reescrito com ADR-006; .gitattributes, .npmrc e .gitignore no repositório. D-09 aberta para a Fatia 1.
 - 21/11/2026 — Prompt da Etapa 3 ajustado às versões atuais das ferramentas, conferidas nas documentações oficiais: pnpm 11 e 12 (configuração só no pnpm-workspace.yaml, que substitui o .npmrc no repositório; scripts de instalação autorizados em allowBuilds), TypeScript na série 6.0 enquanto o typescript-eslint não aceitar o 7, Node 22 ou mais novo e conferência automática da janela pelo protocolo de depuração do WebView2, no build de debug e no modo de desenvolvimento. CLAUDE.md: import que sai da própria pasta (../) usa sempre o alias.
+- 21/11/2026 — Etapa 3 concluída pelo Claude Code em 14 commits (12 itens; pnpm verify verde; CI verde nas duas rodadas, com instalador .msi e .exe; conferência automática da janela sem nenhum erro no build de debug e no modo de desenvolvimento). Link abriu a janela e aprovou: portão G1. Branch etapa-3-base incorporada na main (PR #9). D-09 aprovada (dados em %APPDATA%\com.linkozitos.guitarrero, com Exportar/Importar) e D-10 aprovada (janela maximizada, mínimo 1280×720). Sugestões do relatório que entram na Fatia 1: fundo escuro antes de o app carregar, tsconfig sem DOM para core e domain, conferência da janela como ferramenta permanente do repositório e CI que cancela rodadas antigas; ícone próprio e formato único de instalador ficam para a v1.0.
