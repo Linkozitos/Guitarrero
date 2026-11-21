@@ -1,0 +1,162 @@
+﻿Execute a Etapa 4.1A do Guitarrero: o motor da bancada do Módulo Timbre, primeira parte da Fatia 1, ainda sem telas novas. Se as habilidades engenharia-de-software-full-stack-e-algoritmos-avancados, engenharia-acústicae-timbrador-profissional e motor-de-inteligencia-matematica-e-calculo-avancado estiverem disponíveis nesta sessão, use-as.
+
+<objective>
+Ao final, o Módulo Timbre tem, em TypeScript puro e testado, tudo o que a pedaleira da tela vai usar na Parte B (Etapa 4.1B):
+- os contratos de dados da Etapa 2;
+- os catálogos e os presets da Fatia 1;
+- as conversões e o cálculo dos parâmetros de áudio, iguais aos do protótipo Tone Lab Pro v7.5, com a diferença medida;
+- a comparação entre timbres (Delta);
+- a gravação segura em disco, os 3 slots e a exportação e a importação de backups, inclusive os do protótipo, sem perder nenhum valor;
+- o estado da bancada, que abre sempre em Standby.
+A janela passa a abrir maximizada e escura, e o projeto ganha uma ferramenta permanente que confere a janela sozinha. Motivo de dividir a Fatia 1 em duas partes: tudo nesta parte é verificável por testes automáticos, e as telas e o som da Parte B chegam sobre uma base já provada.
+</objective>
+
+<context_and_legacy>
+- Pasta do projeto: F:\Claude Code\Guitarreiro, clone de github.com/Linkozitos/Guitarrero. A Etapa 3 foi aprovada (portão G1) e incorporada na main. Depois dela, o gestor registrou no doc 05 as decisões D-09 a D-12 e acrescentou ao CLAUDE.md a seção "Tela e dados". A cópia local pode ainda estar na branch etapa-3-base.
+- Se esta sessão tiver uma conversa anterior (por exemplo, um pedido interrompido para preparar um prompt), ignore-a e siga só este pedido.
+- Versões fixadas na Etapa 3, que continuam valendo: pnpm 12, TypeScript 6.0.3, ESLint 10, Vite 8, React 19, Tailwind 4.3, Vitest 5 e Tauri 2.12. Não atualize nenhuma.
+- Decisões do doc 05 (docs/guitarrero/05_PLANO_MESTRE_DECISOES_E_RISCOS.md) que mudam ou detalham a Etapa 2:
+  - D-01: na Fatia 1, o gate do Ammoon repete o protótipo (ganho fixo de 0,15 quando o Ammoon está ativo e o threshold passa de 8,8); o gate real fica para a Fatia 2.
+  - D-02: o agudo da BOMGE fica em 7.500 Hz.
+  - D-03: impedâncias e +4 dBu não entram no cálculo de áudio.
+  - D-06: FX600 com OFF + 6 algoritmos; o PIT é aproximado por um filtro em 520 Hz.
+  - D-07: as constantes do código entram nos contratos.
+  - D-08: o importador aceita os backups TONELAB_V5_0 e TONELAB_V7_5 do protótipo; os projetos do TAB entram com o Módulo TAB.
+  - D-09: os dados ficam em $APPDATA (%APPDATA%\com.linkozitos.guitarrero), numa subpasta por módulo: timbre\ para este.
+  - D-10: a janela abre maximizada, com mínimo de 1280 × 720.
+  - D-11: os atalhos de bancada são os 5 do protótipo (a Etapa 2 lista 4).
+  - D-12: o Delta arredonda a diferença a 0,1 antes de comparar, como diz a Etapa 2 (o protótipo perde mudanças de 0,1 por erro de ponto flutuante: 5,1 − 5,0 = 0,0999…).
+- Nomes da Etapa 2 que mudaram: o "Timbrador Profissional" é agora o Módulo Timbre do Guitarrero; o identificador é com.linkozitos.guitarrero; a pasta appDataDir()/tonelab/ vira $APPDATA/timbre/. O schemaVersion TONELAB_DESKTOP_V1 continua o mesmo.
+- A árvore da seção 1.1 da Etapa 2 é anterior ao ADR-006. Use este mapa:
+  - src/domain/types, catalogs, presets, dsp e diff → src/modules/timbre/domain/, com as mesmas subpastas;
+  - src/persistence/atomicJson.ts e a parte genérica de caminhos e envelopes → src/persistence/ (compartilhada);
+  - schemas, workspaceRepo, slotsRepo, backup e migrations → src/modules/timbre/persistence/;
+  - src/state/workspaceStore.ts → src/modules/timbre/state/;
+  - tipos que o Módulo TAB ou a camada services também vão usar (afinações, BPM e os metadados de música extraídos de links, como MetadataFetchResult) → src/core (music, song ou extractor), importados pelo domínio do Timbre;
+  - src/audio e src/ui → Parte B, fora desta etapa;
+  - os testes espelham as pastas: tests/modules/timbre/domain, tests/persistence, tests/modules/timbre/persistence e tests/modules/timbre/state.
+- O protótipo docs/prototipos/tone-lab-pro-v7.5.html é a referência de comportamento. Pontos de partida (linhas aproximadas): BOMGE_24_PROGRAMS_FULL em 989; clampKnob e conversões em 1094–1102; createZeroedStandbyPreset em 1111; createNeutralGuitarPreset em 1147; computeRigDiffs em 1708; loadBenchCalibrationSamplePreset (#01-A e #01-B) em 1754; delay e BPM em 2273–2285; initializeNeutralGuitarRigState em 2518; applyAllFlatBench5 em 2815; applySafeBedroomVolumePreset em 2833; headroom da BOMGE em 3403; makeUM300DistortionCurve em 3541; atualização do grafo de áudio em 3656; montagem do grafo em togglePlaySimulation, a partir de 3711; slots e backup (formato TONELAB_V7_5) em 4128–4230.
+- O Link acompanha pelo terminal e não é programador. Ele só age quando você pede algo específico, sempre com o comando pronto e o caminho exato (Regra 0 do CLAUDE.md).
+</context_and_legacy>
+
+<execution_workflow>
+Etapa A — Conferência inicial, antes de qualquer mudança
+1. Confirme que está em F:\Claude Code\Guitarreiro e que `git remote get-url origin` aponta para Linkozitos/Guitarrero.
+2. Feche qualquer guitarrero.exe aberto, por exemplo com `powershell -NoProfile -Command "Stop-Process -Name guitarrero -Force -ErrorAction SilentlyContinue"` (se não houver nenhum, siga). Motivo: o Windows não deixa recompilar um executável em uso.
+3. Rode `git fetch origin` e decida entre retomar e começar:
+   - Retomada: SE já existir a branch etapa-4-1a-motor (local ou no GitHub) ENTÃO entre nela (se ela só existir no GitHub, crie a local acompanhando a remota) e veja pelos commits quais itens da Etapa B já estão feitos. Mudanças não commitadas são do item que foi interrompido: anote-as para o começo da Etapa B.
+   - Começo: SENÃO confira que `git status` está limpo, rode `git checkout main` e `git pull --ff-only` e crie a branch etapa-4-1a-motor a partir da main. SE o `git status` não estiver limpo ENTÃO não descarte nada: liste as mudanças no relatório e pare.
+4. Rode `pnpm install --frozen-lockfile` e `pnpm verify`. No começo, o verify precisa passar antes de qualquer mudança (é a linha de base). Na retomada, a linha de base é o último commit: uma falha causada só pelas mudanças não commitadas do item interrompido é esperada.
+5. Leia agora: o CLAUDE.md inteiro, inclusive a seção "Tela e dados"; no doc 05, as decisões D-01 a D-12; na Etapa 2 (docs/timbrador/etapa-2.md), as seções 0 (conferência contra o código), 2.3 e 2.4 (arquivos e escrita atômica), 3.1 a 3.10 (contratos, assinaturas e tabela de conversões) e 5.2 (Fatia 1). As seções 4.x (telas) são da Parte B.
+6. Regra de conflito: SE um valor, uma fórmula ou uma ação do protótipo divergir da Etapa 2 ENTÃO vale o protótipo, salvo decisão do doc 05 em contrário (como a D-12). Registre cada divergência no relatório, com os dois valores.
+
+Etapa B — Doze itens, nesta ordem, com um commit por item. Cada item entrega os seus testes, quando houver o que testar, e o verify continua verde a cada commit. Na retomada, comece pelo item interrompido: confira as mudanças não commitadas, termine o item, faça o commit e siga para o próximo.
+
+1. Janela (D-10) e fundo escuro. No tauri.conf.json: maximized true, center true, width 1280 e height 720 (o tamanho ao sair do modo maximizado, que cabe na tela do Link), minWidth 1280, minHeight 720 e backgroundColor "#07090e". Garanta também o fundo bg-0 desde o primeiro quadro (por exemplo, com um estilo mínimo no index.html), para a janela não piscar branco ao abrir.
+
+2. Checagem de tipos sem DOM no código puro: um projeto TypeScript a mais, incluído no typecheck, cobrindo src/core e src/modules/*/domain, com lib só ES2023 e types vazio (sem DOM e sem os tipos do Node e do Vite). Assim, qualquer uso de DOM, Web Audio, rede ou Node no código puro vira erro de compilação, além da regra do ESLint. Consequências:
+   - tipos que a Etapa 2 pega do DOM, como BiquadFilterType, viram uniões locais com os mesmos valores;
+   - a data atual e os ids entram como parâmetro (as assinaturas da seção 3.9 já recebem now).
+
+3. CI: no .github/workflows/ci.yml, concurrency por workflow e branch com cancel-in-progress, para uma rodada nova cancelar a antiga da mesma branch.
+
+4. Ferramenta permanente de conferência da janela, em scripts/check-window/, escrita em TypeScript executado direto pelo Node (o projeto já usa erasableSyntaxOnly), incluída no tsconfig.node.json e no lint, sem dependência nova.
+   - Uso: `pnpm check:window` roda todas as listas; `pnpm check:window shell` roda uma; `--skip-build` pula a compilação.
+   - O que faz: fecha qualquer guitarrero.exe aberto; compila o app de debug (`pnpm tauri build --debug --no-bundle`); abre o executável com WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=<porta livre>; recarrega a página com o console ligado; executa os passos da lista (clicar por texto ou rótulo acessível, apertar teclas, conferir textos, medir elementos e o estado da janela); junta console, erros de rede, exceções e bloqueios de CSP; tira capturas; grava resultado.json e as capturas em _relatorios/check-window/<lista>/; fecha o app; termina com código de saída diferente de zero em qualquer falha.
+   - Listas em TypeScript, tipadas, em scripts/check-window/checklists/. Primeira lista, "shell": abertura neutra com "Escolha um módulo"; Timbre e TAB mostrando os textos "em construção"; janela maximizada (o Tauri informa isMaximized verdadeiro e a largura interna é igual à largura útil da tela); fundo bg-0; zero mensagens de erro.
+   - Atualize a tabela de comandos do README e a seção Comandos do CLAUDE.md com o check:window.
+
+5. Contratos do domínio do Timbre: todos os tipos das seções 3.1 a 3.8 da Etapa 2, em src/modules/timbre/domain/types/ (salvo os que o mapa acima manda para src/core), inclusive os que só serão usados nas Fatias 2 e 3. Motivo: o workspace gravado em disco referencia quase todos eles, e assim o formato nasce completo, sem migração depois. Mantenha os tipos como a Etapa 2 escreve: KnobValue e PercentValue com marca; Hz, Decibel, Milliseconds, Seconds e Bpm como apelidos de number; as constantes do código (D-07).
+
+6. Catálogos e presets da Fatia 1, com os valores exatos do protótipo:
+   - catálogos: 5 posições de captador, FX600 (OFF + 6 algoritmos, D-06), os 24 programas da BOMGE e as amostras de calibração #01-A e #01-B;
+   - presets: createZeroedStandbyPreset, createNeutralGuitarPreset e applyBenchShortcut com os 5 atalhos do protótipo (D-11): bench_01A (#01-A), bench_01B (#01-B), flat_5 (Flat 5.0, applyAllFlatBench5), neutral (Ligar Cadeia Padrão) e safe_bedroom (Quarto Seguro, que ajusta o timbre atual).
+
+7. DSP puro em src/modules/timbre/domain/dsp/:
+   - conversões: toKnob (texto inválido ou NaN vira 5,0; limite de 0 a 10; arredondamento a 0,1), knobToPercent e percentToKnob, knobToAngleDeg, um300MidFreqToHz, ammoonThresholdDb, bpmToDelayMs (semínima; colcheia pontuada, × 0,75; colcheia, × 0,5; e o slapback fixo de 65 ms do protótipo), delayMsToFx600Par1 e headroomIndex;
+   - uma função de transferência por unidade (as 9 da cadeia) e computeAudioGraphParams (graphParams.ts: HardwareChainState → AudioGraphParams), com o gate legado (D-01) e o agudo da BOMGE em 7.500 Hz (D-02);
+   - makeUm300Curve como função pura sobre Float32Array.
+   As funções devolvem números; a formatação para a tela (Hz, kHz, dB) fica para a Parte B.
+
+8. Delta: computeRigDiff com o RigDiffReport da seção 3.6. A diferença é arredondada a 0,1 antes de comparar e entra quando |delta| ≥ 0,1 (D-12); as mudanças de chave (ligado, captador, modo, algoritmo, programa) entram como 'switch', como no protótipo.
+
+9. Persistência compartilhada em src/persistence/:
+   - uma porta de arquivos (interface) com duas implementações: a do Tauri (plugin fs, BaseDirectory.AppData) para o app e outra em memória, dentro de tests/, para os testes;
+   - atomicJson com a escrita e a leitura da seção 2.4: validar, gravar no .tmp, copiar o arquivo válido para .bak e renomear; leitura em cascata (o arquivo, depois o .bak, depois renomear o ruim para .corrupt-<data>.json e usar o padrão seguro);
+   - o envelope TONELAB_DESKTOP_V1 (schemaVersion, kind, revision, savedAt, data).
+
+10. Persistência do Timbre em src/modules/timbre/persistence/:
+    - caminhos em $APPDATA/timbre/ (D-09);
+    - esquemas zod que espelham os tipos do item 5 e devolvem os tipos do domínio, inclusive as marcas de KnobValue e PercentValue, com um teste de tipos que falha se esquema e tipo deixarem de ser equivalentes;
+    - workspaceRepo com debounce de 400 ms e uma função flush para gravar na hora; slotsRepo, que grava na hora;
+    - backup. Exportação: o objeto da seção 2.4, com app.name "Guitarrero", no arquivo guitarrero-timbre-<musica>-<AAAAMMDD-HHmm>.json. Importação: limite de 5 MB; detecta TONELAB_DESKTOP_V1, TONELAB_V7_5 e TONELAB_V5_0 (os dois com activeToneData e calibrationSessionSlots, o formato que o importador do protótipo lê) e o objeto solto com rig; gera o resumo para confirmação ("3 slots, timbre: …"); aplica tudo ou nada; recusa qualquer outro formato sem alterar nada;
+    - migração do protótipo, campo a campo. O protótipo guarda vários campos com outro nome ou como texto de tela; converta cada um para o contrato, por exemplo: guitar.pickup "Posição 1 — Ponte (Humbucker)" → 1; hotone.modeSwitch "V (Volume)" → mode "V"; toneSwitch → range; qKnob → q; value → pedal; fx600.effect "OFF (Bypass)" → algorithm "OFF"; bomge.program "04 - Delay A" → "04"; yamaha → ga15ii; textos HTML do dossiê → RichTextSegment[]. Normalize os knobs com clampKnob e complete com o Standby só o que realmente não existir no arquivo. Um teste converte os timbres gerados pelas funções do protótipo (Standby, Ligar Cadeia Padrão, #01-A, #01-B, Flat 5.0 e Quarto Seguro) e confere, campo a campo, que nenhum valor se perdeu.
+    As chamadas de diálogo (plugin dialog) ficam em funções finas, separadas da lógica testável.
+
+11. Estado do Timbre em src/modules/timbre/state/: um store zustand criado com zustand/vanilla (testável sem React), com estas ações:
+    - abrir sempre em Standby Real, mesmo que o workspace salvo tenha um timbre ativo (US-01), deixando esse timbre em "Retomar última sessão". Abrir não grava nada: o arquivo só muda quando o Link mexe na bancada, para o "Retomar" continuar valendo se ele fechar o app sem mexer;
+    - ajustar knob e chave, com revisão +1 e Delta calculado;
+    - aplicar os atalhos de bancada;
+    - salvar e carregar os 3 slots;
+    - exportar e importar, com resumo e confirmação;
+    - avisos não bloqueantes, com o texto da seção 2.4 para arquivo corrompido;
+    - flush, para gravar na hora (a ligação com o fechamento da janela entra na Parte B).
+
+12. Paridade com o protótipo (método do mestre de referência):
+    - Copie as funções do protótipo para tests/fixtures/legacy/ sem mudar a lógica de cálculo, só acrescentando export, com uma declaração de tipos (.d.ts) mínima ao lado para os testes continuarem tipados. Essa pasta fica fora do lint, do Prettier e do typecheck: é código legado guardado como referência.
+    - SE uma função do protótipo depender do DOM ou de variáveis globais ENTÃO injete o que ela lê por parâmetros mínimos ou objetos falsos, sem mudar as fórmulas, e descreva a adaptação no relatório. SE ela devolver texto formatado (como "1.00 kHz" ou "-70 dB") ENTÃO compare com o número que ela calcula antes de formatar.
+    - Funções: compare as novas com as cópias numa grade de knobs de 0,0 a 10,0, de 0,5 em 0,5, e nos BPM 50, 90, 120, 160 e 240.
+    - Presets: o rig dos presets e dos atalhos novos é igual, campo a campo, ao do protótipo convertido pela migração do item 10.
+    - Grafo de áudio: rode a montagem e a atualização do protótipo contra um AudioContext falso que registra cada valor atribuído aos nós, nos presets Standby, Ligar Cadeia Padrão, #01-A, #01-B, Flat 5.0 e Quarto Seguro, e compare com computeAudioGraphParams. SE a montagem e a atualização calcularem valores diferentes para o mesmo nó ENTÃO vale a atualização (é ela que roda a cada mudança de knob), e a diferença vai para o relatório. SE copiar a montagem inteira exigir mais que objetos falsos simples ENTÃO extraia da cópia só as atribuições (.value, .type e .curve), sem mudar as fórmulas.
+    - Tolerância: igualdade exata nos valores arredondados e 1e-9 nos demais.
+
+Testes de aceitação que precisam existir ao final da Etapa B, em qualquer item:
+- a tabela 3.10 inteira;
+- escrita atômica com falha simulada no meio; leitura pelo .bak; .corrupt com volta ao Standby e aviso; schemaVersion errado;
+- abertura em Standby com timbre salvo; "Retomar última sessão"; abrir e fechar sem mexer não altera o arquivo;
+- slots que sobrevivem a reiniciar (store novo sobre os mesmos arquivos);
+- importação de TONELAB_V7_5, TONELAB_V5_0, objeto com rig e TONELAB_DESKTOP_V1, com fixtures geradas pelas funções do protótipo no formato que ele exporta;
+- recusa de formato desconhecido e de arquivo acima de 5 MB sem alterar nada;
+- debounce de 400 ms com relógio falso;
+- Delta no limiar de 0,1, inclusive os casos de ponto flutuante da D-12 (por exemplo, 5,0 → 5,1).
+
+Etapa C — Verificação e entrega
+1. `pnpm verify` precisa terminar verde; guarde a saída e o número de testes por pasta.
+2. Rode `pnpm build` e depois `cargo check` dentro de src-tauri.
+3. Rode `pnpm check:window`. SE falhar ENTÃO corrija a causa, faça commit e repita.
+4. `git push -u origin etapa-4-1a-motor`. Não abra pull request: o gestor abre e incorpora a branch depois de revisar. SE o Git abrir o navegador pedindo login no GitHub ENTÃO avise o Link com esta frase: "Link, abriu uma janela do navegador pedindo login no GitHub: entre com a sua conta e me avise." e espere. SE o push travar pedindo usuário e senha no próprio terminal ENTÃO interrompa e entregue ao Link este comando, para colar numa janela nova do PowerShell (menu Iniciar → digite PowerShell → Abrir): cd "F:\Claude Code\Guitarreiro"; git push -u origin etapa-4-1a-motor
+5. Acompanhe o CI da branch no GitHub, como na Etapa 3, até os dois jobs terminarem. SE algum falhar ENTÃO corrija, faça commit e push e acompanhe de novo.
+6. Abra o executável de debug, sem a variável de depuração e em segundo plano, e deixe a janela aberta para o Link.
+7. SE o Link responder depois que a janela abriu com problema ENTÃO rode o check:window para achar a causa, corrija, faça commit e push e registre no relatório.
+</execution_workflow>
+
+<constraints>
+- Trabalhe só dentro de F:\Claude Code\Guitarreiro (decisão G-08). Os caches que as ferramentas criam sozinhas fora dela (F:\.pnpm-store, Cargo, WebView2 e pnpm nas pastas do usuário) são esperados e ficam onde estão.
+- Não edite docs/, tools/ nem _instalacao/. No CLAUDE.md, mexa só na seção Comandos; no README, só na tabela de comandos e na linha de status.
+- Use só comandos não interativos e com tempo-limite, porque o terminal do agente não responde perguntas. SE um comando parar esperando resposta ENTÃO cancele e siga por um caminho não interativo.
+- Nada de push direto na main, force push ou git reset --hard. Não apague arquivos que já existiam antes desta etapa; os que você criar podem ser movidos ou removidos. Arquivos temporários só em _scaffold_tmp/, apagada no fim.
+- Não atualize dependências. Nenhuma dependência nova é esperada; SE uma for indispensável ENTÃO use versão exata e registre o motivo no relatório.
+- Respeite a tabela "Quem pode importar quem" do CLAUDE.md; o ESLint e o typecheck do item 2 barram o resto. Código e identificadores em inglês; comentários e textos da interface em português do Brasil.
+- Fora do escopo desta parte: as telas do Módulo Timbre (barras, pedaleira, Blocos 2, 9 e 10, modais), o AudioEngine, o ReferenceTone e as Fatias 2 e 3. Os tipos delas entram como contratos, sem tela e sem som. Ideias de melhoria vão para o relatório, na seção Sugestões, sem ser implementadas.
+- Não troque a stack para contornar um erro. SE algo falhar por causa do ambiente do Windows ENTÃO pare, explique em linguagem simples e entregue ao Link o comando exato para corrigir, com a janela onde ele deve rodar.
+</constraints>
+
+<output_contract>
+1. Grave _relatorios/ETAPA_4_1A_RELATORIO.md com:
+   - resumo em linguagem simples;
+   - tabela dos 12 itens (feito ou não feito, e o motivo);
+   - saída do pnpm verify e do cargo check, e o número de testes por área;
+   - resultado do check:window, com o caminho das capturas;
+   - paridade: as funções comparadas com o protótipo e a maior diferença encontrada em cada uma;
+   - divergências entre o protótipo e a Etapa 2, com os dois valores, e as adaptações feitas nas cópias do protótipo;
+   - commits (hash curto e mensagem) e resultado do CI;
+   - desvios em relação a este pedido, com o motivo;
+   - sugestões.
+2. Encerre com esta mensagem para o Link, preenchendo os colchetes:
+"Etapa 4.1A concluída. [resumo em até 3 linhas]
+O que você faz agora:
+1. Olhe a janela Guitarrero que abriu: ela deve ocupar a tela toda acima da barra de tarefas e aparecer escura desde o primeiro instante. Clique em Timbre e depois em TAB; os dois ainda mostram "em construção", porque a pedaleira entra na Parte B.
+2. Se a janela abrir pequena, branca, com erro ou diferente disso, escreva aqui: a janela abriu com problema. Se estiver tudo certo, feche a janela pelo X.
+3. Volte à conversa com o gestor no app Claude, a mesma de onde você copiou este pedido, e escreva: Etapa 4.1A concluída.
+O gestor lê o relatório direto na pasta e confere o CI no GitHub."
+</output_contract>

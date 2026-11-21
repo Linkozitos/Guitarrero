@@ -58,6 +58,12 @@ Quem pode importar quem (ESLint no-restricted-imports; aliases @app, @ui-kit, @c
 - @tauri-apps/* só nas camadas persistence; fetch só em services.
 - Import que sai da própria pasta (../) usa sempre o alias; caminho relativo só com ./, dentro da mesma pasta. Assim as regras acima valem só para aliases e pacotes.
 
+## Tela e dados (D-09 e D-10)
+- Janela: abre maximizada, com mínimo de 1280 × 720. A tela do Link tem 1920 × 1080 com escala de 125% (área útil de 1536 × 816 px lógicos); maximizada, a área interna da janela fica em cerca de 1536 × 785. Desenhe as telas para essa área e confira que nada essencial some em 1280 × 720.
+- Fundo bg-0 (#07090e) desde o primeiro quadro: a janela não pisca branco ao abrir.
+- Dados do usuário em $APPDATA (%APPDATA%\com.linkozitos.guitarrero), uma subpasta por módulo (timbre\ e tab\), com escrita atômica e cópia .bak. Para levar os dados a outro lugar, o Link usa Exportar e Importar.
+- O app abre sempre em Standby Real (US-01): nenhum equipamento ligado e nada pré-selecionado; o último timbre fica no botão "Retomar última sessão".
+
 ## Comandos
 - pnpm install: instala as dependências
 - pnpm tauri dev: abre o app em modo de desenvolvimento

@@ -39,7 +39,7 @@ Se algum comando de verificação der erro em vermelho, pare, tire um print e ma
 
 ## Parte B — CLAUDE.md do repositório
 
-Este arquivo fica na raiz do repositório. O Claude Code lê ele no começo de toda sessão, então é a memória permanente do lado do código. Ele está gravado no repositório; o texto abaixo é a versão vigente (revisão 2, 21/11, com a Regra 0 e a ADR-006).
+Este arquivo fica na raiz do repositório. O Claude Code lê ele no começo de toda sessão, então é a memória permanente do lado do código. Ele está gravado no repositório, e a versão vigente é sempre a da raiz do repositório. O texto abaixo é a versão de 21/11 usada na Etapa 3 (com a Regra 0 e a ADR-006); na Etapa 4.1A o CLAUDE.md ganhou a seção "Tela e dados" (D-09 e D-10).
 
 ````
 # Guitarrero — guia para o Claude Code
