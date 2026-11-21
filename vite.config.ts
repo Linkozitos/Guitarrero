@@ -1,32 +1,50 @@
-import { defineConfig } from "vite";
+import { fileURLToPath, URL } from "node:url";
 import react from "@vitejs/plugin-react";
-// @ts-expect-error type error without @types/node package
-import process from "node:process";
-const host = process.env.TAURI_DEV_HOST;
+import { defineConfig } from "vite";
+
+/** Caminho absoluto de uma pasta do projeto, a partir da raiz (onde está este arquivo). */
+function fromRoot(relativePath: string): string {
+  return fileURLToPath(new URL(relativePath, import.meta.url));
+}
+
+// Aliases de camada (ADR-006): os mesmos de "paths" no tsconfig.app.json.
+// O Vitest herda estes aliases pelo vitest.config.ts.
+const layerAliases = {
+  "@app": fromRoot("./src/app"),
+  "@ui-kit": fromRoot("./src/ui-kit"),
+  "@core": fromRoot("./src/core"),
+  "@audio": fromRoot("./src/audio"),
+  "@persistence": fromRoot("./src/persistence"),
+  "@services": fromRoot("./src/services"),
+  "@modules": fromRoot("./src/modules"),
+};
+
+// Endereço do servidor de desenvolvimento quando o app roda em outro aparelho
+// (usado só pelo Tauri mobile; no Windows fica vazio).
+const tauriDevHost = process.env.TAURI_DEV_HOST;
+const remoteHost =
+  tauriDevHost !== undefined && tauriDevHost.length > 0 ? tauriDevHost : null;
 
 // https://vite.dev/config/
-export default defineConfig(() => ({
+export default defineConfig({
   plugins: [react()],
-
-  // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
-  //
-  // 1. prevent Vite from obscuring rust errors
+  resolve: {
+    alias: layerAliases,
+  },
+  // Opções do Vite para o Tauri:
+  // 1. não esconder os erros do Rust no terminal;
   clearScreen: false,
-  // 2. tauri expects a fixed port, fail if that port is not available
   server: {
+    // 2. o Tauri espera a porta fixa 1420 e falha se ela estiver ocupada;
     port: 1420,
     strictPort: true,
-    host: host || false,
-    hmr: host
-      ? {
-          protocol: "ws",
-          host,
-          port: 1421,
-        }
-      : undefined,
+    host: remoteHost ?? false,
+    ...(remoteHost === null
+      ? {}
+      : { hmr: { protocol: "ws", host: remoteHost, port: 1421 } }),
+    // 3. não observar a pasta src-tauri.
     watch: {
-      // 3. tell Vite to ignore watching `src-tauri`
       ignored: ["**/src-tauri/**"],
     },
   },
-}));
+});
