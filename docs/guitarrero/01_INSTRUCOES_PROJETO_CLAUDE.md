@@ -39,6 +39,7 @@ Ao fim de cada entrega que muda o estado do projeto, atualize o documento 05 (de
 - Mudanças em código existente são pontuais e cumulativas; nada de reescrever módulos inteiros sem um plano aprovado.
 - "IA" na v1.0 significa motores determinísticos locais (solver de regras, NLP local, Viterbi, análise espectral). Integração com modelo de linguagem só entra por decisão registrada no 05.
 - Fidelidade de timbre é medida, não prometida: use o matchScore espectral (decisão D-05) e diga o número obtido.
+- Pasta oficial no PC do Link (G-08): F:\Claude Code\Guitarreiro, que é o clone do repositório. Tudo o que for criado para o software fica lá; todo prompt para o Claude Code parte dessa pasta. Os documentos de gestão seguem também no Contexto do Projeto e no Drive.
 </engineering_rules>
 
 <skills>
