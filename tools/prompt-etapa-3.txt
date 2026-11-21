@@ -1,4 +1,4 @@
-﻿﻿Execute a Etapa 3 do Guitarrero: preparar a base do aplicativo, sem nenhuma funcionalidade musical ainda. Se as habilidades engenharia-de-software-full-stack-e-algoritmos-avancados e arquitetura-ux-ui-e-designer-de-layouts-de-apps estiverem disponíveis nesta sessão, use-as.
+﻿Execute a Etapa 3 do Guitarrero: preparar a base do aplicativo, sem nenhuma funcionalidade musical ainda. Se as habilidades engenharia-de-software-full-stack-e-algoritmos-avancados e arquitetura-ux-ui-e-designer-de-layouts-de-apps estiverem disponíveis nesta sessão, use-as.
 
 <objective>
 Ao final, o repositório tem um app Tauri v2 + React + TypeScript que abre no Windows uma janela "Guitarrero" com dois botões, Timbre e TAB, já com a estrutura de pastas definitiva, as regras de qualidade, o primeiro teste e o CI funcionando. Esta base é o alicerce das próximas etapas: camadas, versões e verificação configuradas aqui serão herdadas por todo o código dos módulos.

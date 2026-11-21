@@ -121,7 +121,7 @@ Quem pode importar quem (ESLint no-restricted-imports; aliases @app, @ui-kit, @c
 Onde colar: na janela do Claude Code aberta na pasta F:\Claude Code\Guitarreiro (o instalador automático já deixa ela aberta; se fechou, abra o PowerShell e rode `cd "F:\Claude Code\Guitarreiro"; claude`). Digite `/effort max` e Enter, depois cole o texto abaixo e aperte Enter. O mesmo texto está em F:\Claude Code\Guitarreiro\_instalacao\PROMPT_ETAPA_3.txt e em tools/prompt-etapa-3.txt no repositório. O prompt é retomável: se a etapa parar no meio (limite de uso, queda de energia), basta colar o mesmo texto de novo.
 
 ````
-﻿Execute a Etapa 3 do Guitarrero: preparar a base do aplicativo, sem nenhuma funcionalidade musical ainda. Se as habilidades engenharia-de-software-full-stack-e-algoritmos-avancados e arquitetura-ux-ui-e-designer-de-layouts-de-apps estiverem disponíveis nesta sessão, use-as.
+Execute a Etapa 3 do Guitarrero: preparar a base do aplicativo, sem nenhuma funcionalidade musical ainda. Se as habilidades engenharia-de-software-full-stack-e-algoritmos-avancados e arquitetura-ux-ui-e-designer-de-layouts-de-apps estiverem disponíveis nesta sessão, use-as.
 
 <objective>
 Ao final, o repositório tem um app Tauri v2 + React + TypeScript que abre no Windows uma janela "Guitarrero" com dois botões, Timbre e TAB, já com a estrutura de pastas definitiva, as regras de qualidade, o primeiro teste e o CI funcionando. Esta base é o alicerce das próximas etapas: camadas, versões e verificação configuradas aqui serão herdadas por todo o código dos módulos.
@@ -191,4 +191,4 @@ O gestor lê o relatório direto na pasta e confere o CI no GitHub."
 ````
 
 ### O que você deve ver ao final
-Uma janela chamada Guitarrero com dois botões, Timbre e TAB. Se abrir, mande um print no Projeto Guitarrero: esse é o portão G1.
+Uma janela chamada Guitarrero com dois botões, Timbre e TAB, aberta pelo próprio Claude Code. Depois de olhar, escreva na conversa "Configuração de projeto com IA" do Projeto Guitarrero: Etapa 3 concluída. O gestor lê o relatório em F:\Claude Code\Guitarreiro\_relatorios\ETAPA_3_RELATORIO.md, confere o CI e registra o portão G1.
