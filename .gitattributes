@@ -1,0 +1,25 @@
+# Fim de linha LF em todo o texto do repositório (Windows e CI ficam iguais)
+* text=auto eol=lf
+
+# Scripts do PowerShell ficam com CRLF, o padrão do Windows
+*.ps1 text eol=crlf
+
+# Protótipos de referência: guardados exatamente como foram entregues
+docs/prototipos/** -text
+
+# Binários
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.icns binary
+*.webp binary
+*.wav binary
+*.mp3 binary
+*.m4a binary
+*.ogg binary
+*.flac binary
+*.zip binary
+*.exe binary
+*.msi binary

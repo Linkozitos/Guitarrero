@@ -1,2 +1,8 @@
 # Instalador e registros locais da instalação (ficam só no PC do Link)
 _instalacao/
+
+# Relatórios de cada etapa gravados pelo Claude Code (lidos pelo gestor direto na pasta)
+_relatorios/
+
+# Pasta temporária usada para gerar o template do app
+_scaffold_tmp/

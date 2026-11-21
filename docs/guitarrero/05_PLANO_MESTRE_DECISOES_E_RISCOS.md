@@ -6,10 +6,10 @@ Registro oficial do projeto. Atualizado pelo Claude a cada entrega. Última atua
 
 | Campo | Valor |
 |---|---|
-| Etapa atual | Etapa 3 — Setup do repositório (aguardando a preparação do PC) |
+| Etapa atual | Etapa 3 — Setup do repositório (PC pronto; prompt revisão 2 pronto) |
 | Último portão aprovado | G0 — Configuração concluída (21/11) |
-| Bloqueio | Nenhuma decisão pendente. Falta 1 ação do Link: instalar os pré-requisitos do 06 (Parte A) |
-| Próximo passo | Link: rodar o instalador automático (doc 06, Caminho automático), que termina abrindo o Claude Code com o prompt da Etapa 3 copiado |
+| Bloqueio | Nenhum |
+| Próximo passo | Link: na janela do Claude Code aberta em F:\Claude Code\Guitarreiro, digitar /effort max e colar o prompt da Etapa 3 (revisão 2). O Claude Code faz o resto; depois o gestor lê o relatório em _relatorios\ e confere o CI |
 
 ## 2. Roadmap com portões
 
@@ -53,6 +53,7 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 | G-06 | Significado de "IA" na v1.0 | Motores determinísticos locais; modelo de linguagem só na v2.0, se aprovado | Mantém o princípio da Etapa 1: offline, sem chave de API, sem custo mensal | Proposta |
 | G-07 | Meta de fidelidade de timbre | matchScore ≥ 90, medido e exibido | "90%" passa a ser um número verificável, não uma promessa | Proposta |
 | G-08 | Pasta oficial do software no PC | F:\Claude Code\Guitarreiro, como clone do repositório Guitarrero | Pedido do Link: tudo o que for criado para o software fica num lugar só; documentos de gestão seguem também no Projeto e no Drive | Aprovada pelo Link (21/11) |
+| G-09 | Regra 0 | 100% eficiência, 0% esforço para o Link: todo comando ou prompt vem completo na mensagem, com o caminho exato de onde usar; o resto é automatizado | Regra fundamental definida pelo Link para tudo o que for criado ou feito | Aprovada pelo Link (21/11) |
 
 ### 3.2 Pendências herdadas da Etapa 2 (seção 5.3)
 
@@ -68,6 +69,8 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 | D-06 | FX600: 6 algoritmos + OFF; PIT aproximado por filtro em 520 Hz | Manter como está | Registrada |
 | D-07 | Constantes do código incluídas nos contratos | Manter como está | Registrada |
 | D-08 | Importador aceita backups antigos e migra para o formato novo | Ampliar: aceitar TONELAB_V5_0, TONELAB_V7_5 e projetos do TAB (tab_simplifier_pro_yousician_v4) | Proposta (ampliação de 21/11) |
+| ADR-006 | Camadas por módulo: core puro compartilhado; audio, persistence e services compartilhados; cada módulo com domain, audio, persistence, state e ui; @tauri-apps só nas camadas persistence; um módulo nunca importa o outro (detalhe no CLAUDE.md) | Decisão técnica do Claude, dentro da arquitetura aprovada (ADR-004); corrige a versão anterior do CLAUDE.md, que punha a persistência no núcleo sem Tauri | Registrada (21/11) |
+| D-09 | Onde o app guarda os dados do Link (presets, sessões, amostras): pasta padrão do Windows para apps (%APPDATA%\com.linkozitos.guitarrero) ou dentro de F:\Claude Code\Guitarreiro | Pasta padrão do Windows, com Exportar/Importar para qualquer pasta que o Link escolher | Pendente: decidir antes da Fatia 1 |
 
 ## 4. Matriz de riscos
 
@@ -79,6 +82,7 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 | Fidelidade abaixo de 90 por limite do equipamento | Média | Expectativa frustrada | Mostrar o número real e o equipamento que limita; a meta é validada, não prometida |
 | Tom detectado errado no TAB (T-01) | Alta | Dossiê e pacote ao Timbre errados | Corrigir com perfis de tonalidade na Etapa 6, com teste |
 | Perder contexto entre sessões | Média | Retrabalho | Este documento + Memória do Projeto + CLAUDE.md no repositório |
+| Limite de uso do plano no meio de uma etapa longa (esforço máximo) | Média | Etapa para no meio | Prompts retomáveis: a branch da etapa e o relatório em _relatorios\ dizem onde parou; basta colar o mesmo prompt de novo |
 
 ## 5. Backlog fora da v1.0
 
@@ -98,3 +102,5 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 - 21/11/2026 — Instruções coladas e salvas pelo Claude no Projeto Guitarrero. Portão G0 concluído: Instruções, Contexto (5 arquivos), Memória e GitHub configurados.
 - 21/11/2026 — G-08: pasta oficial do software definida em F:\Claude Code\Guitarreiro (vazia, pronta para receber o clone na Etapa 3). CLAUDE.md, Instruções e guia da Etapa 3 atualizados.
 - 21/11/2026 — Instalador automático INSTALAR_GUITARRERO.ps1 e PROMPT_ETAPA_3.txt gravados em F:\Claude Code\Guitarreiro\_instalacao (sintaxe conferida); pasta _instalacao/ no .gitignore do repositório.
+- 21/11/2026 — Link conclui a preparação do PC: o instalador automático deu OK nos 9 itens e o repositório foi baixado em F:\Claude Code\Guitarreiro.
+- 21/11/2026 — G-09 (Regra 0) registrada nas Instruções, na Memória e no CLAUDE.md. Prompt da Etapa 3 revisado e blindado (revisão 2): retomada automática, pasta temporária para o template, comandos não interativos, CSP com o canal interno do Tauri e política de desenvolvimento, fim de linha LF, versões exatas, prova das regras de camada, branch etapa-3-base, relatório em _relatorios\ e verificação do título da janela. CLAUDE.md reescrito com ADR-006; .gitattributes, .npmrc e .gitignore no repositório. D-09 aberta para a Fatia 1.
