@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "lib": ["ES2023", "DOM"],
+    "types": ["vite/client"],
+    "jsx": "react-jsx",
+    "paths": {
+      "@app": ["./src/app"],
+      "@app/*": ["./src/app/*"],
+      "@ui-kit": ["./src/ui-kit"],
+      "@ui-kit/*": ["./src/ui-kit/*"],
+      "@core": ["./src/core"],
+      "@core/*": ["./src/core/*"],
+      "@audio": ["./src/audio"],
+      "@audio/*": ["./src/audio/*"],
+      "@persistence": ["./src/persistence"],
+      "@persistence/*": ["./src/persistence/*"],
+      "@services": ["./src/services"],
+      "@services/*": ["./src/services/*"],
+      "@modules": ["./src/modules"],
+      "@modules/*": ["./src/modules/*"]
+    }
+  },
+  "include": ["src", "tests"]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Janela principal: núcleo do Tauri, diálogos de arquivo e sistema de arquivos só na pasta de dados do app ($APPDATA). Arquivos de fora, só os que o usuário escolher num diálogo (o plugin dialog libera cada um). Sem shell.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:default",
+    "fs:read-all",
+    "fs:write-all",
+    {
+      "identifier": "fs:scope",
+      "allow": [{ "path": "$APPDATA" }, { "path": "$APPDATA/**/*" }]
+    },
+    "fs:deny-default"
+  ]
+}

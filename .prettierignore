@@ -1,0 +1,11 @@
+# Pastas e arquivos que o Prettier não formata.
+# docs/ guarda os protótipos de referência e não pode ser reformatada; os .md são mantidos pelo gestor.
+docs/
+tools/
+_instalacao/
+_relatorios/
+_scaffold_tmp/
+dist/
+src-tauri/
+pnpm-lock.yaml
+*.md

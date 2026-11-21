@@ -1,0 +1,20 @@
+/* Estilo global do Guitarrero: Tailwind local + tokens Dark Studio. Importado pelo src/main.tsx. */
+/* source("../..") = só src/ é varrida atrás de classes: os protótipos em docs/ têm classes próprias. */
+@import "tailwindcss" source("../..");
+@import "./tokens.css";
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-bg-0 font-sans text-sm text-fg-1;
+  }
+
+  /* Foco visível pelo teclado: anel de 2 px amber com afastamento de 2 px (Etapa 2, seção 4.1). */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-amber);
+    outline-offset: 2px;
+  }
+}

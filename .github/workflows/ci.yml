@@ -1,0 +1,72 @@
+# CI do Guitarrero: confere o código em todo push e gera o instalador do Windows.
+# Sem macOS (decisão G-04: a v1.0 é só para Windows).
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    name: verificar
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v7
+
+      - name: Instalar o pnpm na versão do packageManager
+        uses: pnpm/action-setup@v6
+
+      - name: Instalar o Node 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Instalar as dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint, formatação, typecheck e testes
+        run: pnpm verify
+
+  instalador-windows:
+    name: instalador-windows
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v7
+
+      - name: Instalar o pnpm na versão do packageManager
+        uses: pnpm/action-setup@v6
+
+      - name: Instalar o Node 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Instalar o Rust estável
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache da compilação do Rust
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - name: Instalar as dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Gerar o instalador (.msi e .exe)
+        run: pnpm tauri build
+
+      - name: Publicar o instalador
+        uses: actions/upload-artifact@v7
+        with:
+          name: guitarrero-windows
+          path: src-tauri/target/release/bundle/
+          if-no-files-found: error
