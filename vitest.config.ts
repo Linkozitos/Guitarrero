@@ -1,5 +1,5 @@
 import { defineConfig, mergeConfig } from "vitest/config";
-import viteConfig from "./vite.config";
+import viteConfig from "./vite.config.ts";
 
 // O Vitest herda a configuração do Vite, inclusive os aliases de camada
 // (@app, @ui-kit, @core, @audio, @persistence, @services e @modules),
