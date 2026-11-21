@@ -25,6 +25,7 @@ Regras de camada: domain e core não importam React nem Tauri; módulos não imp
 pnpm install · pnpm dev · pnpm tauri dev · pnpm lint · pnpm typecheck · pnpm test · pnpm tauri build
 
 ## Como trabalhar
+- Pasta oficial no PC do Link: F:\Claude Code\Guitarreiro (este repositório). Tudo o que for criado para o software (código, builds, amostras de teste, exportações) fica dentro dela; nada fora.
 - Antes de terminar qualquer tarefa: pnpm lint && pnpm typecheck && pnpm test, todos verdes.
 - Toda fórmula nova ou migrada ganha teste com valor de referência do protótipo.
 - Mudanças pontuais e pequenas; commits com mensagem em português dizendo o que mudou e por quê.

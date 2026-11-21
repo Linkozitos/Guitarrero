@@ -52,6 +52,7 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 | G-05 | Gemini fora do projeto; Claude faz gestão e código | Sim | Pedido do Link em 21/11; elimina retrabalho de cópia entre IAs | Aprovada pelo Link |
 | G-06 | Significado de "IA" na v1.0 | Motores determinísticos locais; modelo de linguagem só na v2.0, se aprovado | Mantém o princípio da Etapa 1: offline, sem chave de API, sem custo mensal | Proposta |
 | G-07 | Meta de fidelidade de timbre | matchScore ≥ 90, medido e exibido | "90%" passa a ser um número verificável, não uma promessa | Proposta |
+| G-08 | Pasta oficial do software no PC | F:\Claude Code\Guitarreiro, como clone do repositório Guitarrero | Pedido do Link: tudo o que for criado para o software fica num lugar só; documentos de gestão seguem também no Projeto e no Drive | Aprovada pelo Link (21/11) |
 
 ### 3.2 Pendências herdadas da Etapa 2 (seção 5.3)
 
@@ -95,3 +96,4 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 - 21/11/2026 — Link aprova G-02, G-03, G-04 e as 6 pendências da Etapa 2. Com D-02 aprovada, o agudo da BOMGE passa a 7.500 Hz (a Etapa 1 original fica como registro histórico). Gravação direta no GitHub recusada (o Claude não tem acesso de escrita à conta Linkozitos); arquivos entregues no pacote Guitarrero_pacote_inicial_repositorio.zip.
 - 21/11/2026 — Repositório renomeado para Guitarrero; app do Claude instalado no GitHub só para esse repositório; CLAUDE.md, docs e protótipos gravados na branch main (PR #1). O zip passa a ser só uma cópia de reserva.
 - 21/11/2026 — Instruções coladas e salvas pelo Claude no Projeto Guitarrero. Portão G0 concluído: Instruções, Contexto (5 arquivos), Memória e GitHub configurados.
+- 21/11/2026 — G-08: pasta oficial do software definida em F:\Claude Code\Guitarreiro (vazia, pronta para receber o clone na Etapa 3). CLAUDE.md, Instruções e guia da Etapa 3 atualizados.

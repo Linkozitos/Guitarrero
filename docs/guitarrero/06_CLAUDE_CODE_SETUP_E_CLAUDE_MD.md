@@ -61,6 +61,7 @@ Regras de camada: domain e core não importam React nem Tauri; módulos não imp
 pnpm install · pnpm dev · pnpm tauri dev · pnpm lint · pnpm typecheck · pnpm test · pnpm tauri build
 
 ## Como trabalhar
+- Pasta oficial no PC do Link: F:\Claude Code\Guitarreiro (este repositório). Tudo o que for criado para o software (código, builds, amostras de teste, exportações) fica dentro dela; nada fora.
 - Antes de terminar qualquer tarefa: pnpm lint && pnpm typecheck && pnpm test, todos verdes.
 - Toda fórmula nova ou migrada ganha teste com valor de referência do protótipo.
 - Mudanças pontuais e pequenas; commits com mensagem em português dizendo o que mudou e por quê.
@@ -69,10 +70,10 @@ pnpm install · pnpm dev · pnpm tauri dev · pnpm lint · pnpm typecheck · pnp
 
 ## Parte C — Prompt da Etapa 3 (colar no Claude Code)
 
-Pré-condições: Parte A concluída, portão G0 aprovado, e o repositório já renomeado para Guitarrero, com o CLAUDE.md e a pasta docs gravados pelo Claude em 21/11. Abra o PowerShell, entre na pasta onde quer guardar o projeto (por exemplo `cd $HOME\Documents`), clone o repositório com `git clone https://github.com/Linkozitos/Guitarrero.git` e entre nela com `cd Guitarrero`, digite `claude` e cole o texto abaixo.
+Pré-condições: Parte A concluída, portão G0 aprovado, e o repositório já renomeado para Guitarrero, com o CLAUDE.md e a pasta docs gravados pelo Claude em 21/11. Abra o PowerShell e rode, uma linha por vez: `cd "F:\Claude Code\Guitarreiro"` (a pasta oficial do projeto, decisão G-08), depois `git clone https://github.com/Linkozitos/Guitarrero.git .` (o ponto no final faz o repositório ser baixado direto nessa pasta, sem criar outra dentro) e por fim `claude`. Então cole o texto abaixo.
 
 ````
-Execute a Etapa 3 do Guitarrero: criar a base do repositório, sem nenhuma funcionalidade ainda. Leia antes o CLAUDE.md, docs/guitarrero/05_PLANO_MESTRE_DECISOES_E_RISCOS.md e a seção 5.1 de docs/timbrador/etapa-2.md; esta tarefa segue aquela seção com as adaptações abaixo, que vêm das decisões G-01 a G-04.
+Execute a Etapa 3 do Guitarrero: criar a base do repositório, sem nenhuma funcionalidade ainda. Trabalhe só dentro de F:\Claude Code\Guitarreiro, a pasta oficial do projeto, que é este repositório; não crie nada fora dela. Leia antes o CLAUDE.md, docs/guitarrero/05_PLANO_MESTRE_DECISOES_E_RISCOS.md e a seção 5.1 de docs/timbrador/etapa-2.md; esta tarefa segue aquela seção com as adaptações abaixo, que vêm das decisões G-01 a G-04.
 
 Faça, nesta ordem:
 1. Crie o app Tauri v2 com o template React + TypeScript + Vite dentro deste repositório, sem apagar CLAUDE.md nem docs/. Antes, se CLAUDE.md e docs/ ainda não estiverem commitados, faça um primeiro commit só com eles ("docs: pacote inicial do Guitarrero"). Nome do produto "Guitarrero", identificador com.linkozitos.guitarrero, janela mínima 1280 × 800.
