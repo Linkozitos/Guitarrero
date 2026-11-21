@@ -9,7 +9,7 @@ Registro oficial do projeto. Atualizado pelo Claude a cada entrega. Última atua
 | Etapa atual | Etapa 3 — Setup do repositório (aguardando a preparação do PC) |
 | Último portão aprovado | G0 — Configuração concluída (21/11) |
 | Bloqueio | Nenhuma decisão pendente. Falta 1 ação do Link: instalar os pré-requisitos do 06 (Parte A) |
-| Próximo passo | Link: a ação acima e mandar o print das verificações. Depois: prompt da Etapa 3 no Claude Code (doc 06, Parte C) |
+| Próximo passo | Link: rodar o instalador automático (doc 06, Caminho automático), que termina abrindo o Claude Code com o prompt da Etapa 3 copiado |
 
 ## 2. Roadmap com portões
 
@@ -97,3 +97,4 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 - 21/11/2026 — Repositório renomeado para Guitarrero; app do Claude instalado no GitHub só para esse repositório; CLAUDE.md, docs e protótipos gravados na branch main (PR #1). O zip passa a ser só uma cópia de reserva.
 - 21/11/2026 — Instruções coladas e salvas pelo Claude no Projeto Guitarrero. Portão G0 concluído: Instruções, Contexto (5 arquivos), Memória e GitHub configurados.
 - 21/11/2026 — G-08: pasta oficial do software definida em F:\Claude Code\Guitarreiro (vazia, pronta para receber o clone na Etapa 3). CLAUDE.md, Instruções e guia da Etapa 3 atualizados.
+- 21/11/2026 — Instalador automático INSTALAR_GUITARRERO.ps1 e PROMPT_ETAPA_3.txt gravados em F:\Claude Code\Guitarreiro\_instalacao (sintaxe conferida); pasta _instalacao/ no .gitignore do repositório.
