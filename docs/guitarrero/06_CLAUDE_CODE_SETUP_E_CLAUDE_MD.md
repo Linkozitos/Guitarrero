@@ -31,7 +31,7 @@ Se algum comando de verificação der erro em vermelho, pare, tire um print e ma
 
 ## Parte B — CLAUDE.md do repositório
 
-Este arquivo fica na raiz do repositório. O Claude Code lê ele no começo de toda sessão, então é a memória permanente do lado do código. Ele já vem pronto no pacote inicial (Guitarrero_pacote_inicial_repositorio.zip); o texto fica aqui como referência.
+Este arquivo fica na raiz do repositório. O Claude Code lê ele no começo de toda sessão, então é a memória permanente do lado do código. Ele já está gravado no repositório desde 21/11; o texto fica aqui como referência.
 
 ````
 # Guitarrero — guia para o Claude Code
@@ -69,7 +69,7 @@ pnpm install · pnpm dev · pnpm tauri dev · pnpm lint · pnpm typecheck · pnp
 
 ## Parte C — Prompt da Etapa 3 (colar no Claude Code)
 
-Pré-condições: Parte A concluída, portão G0 aprovado, e o repositório renomeado para Guitarrero no GitHub (Settings → General → Repository name). Abra o PowerShell, entre na pasta onde quer guardar o projeto (por exemplo `cd $HOME\Documents`), clone o repositório com `git clone https://github.com/Linkozitos/Guitarrero.git` e entre nela com `cd Guitarrero`. Abra essa pasta no Explorador de Arquivos e copie para dentro dela o conteúdo da pasta guitarrero do zip (o arquivo CLAUDE.md e a pasta docs). Volte ao PowerShell, digite `claude` e cole o texto abaixo.
+Pré-condições: Parte A concluída, portão G0 aprovado, e o repositório já renomeado para Guitarrero, com o CLAUDE.md e a pasta docs gravados pelo Claude em 21/11. Abra o PowerShell, entre na pasta onde quer guardar o projeto (por exemplo `cd $HOME\Documents`), clone o repositório com `git clone https://github.com/Linkozitos/Guitarrero.git` e entre nela com `cd Guitarrero`, digite `claude` e cole o texto abaixo.
 
 ````
 Execute a Etapa 3 do Guitarrero: criar a base do repositório, sem nenhuma funcionalidade ainda. Leia antes o CLAUDE.md, docs/guitarrero/05_PLANO_MESTRE_DECISOES_E_RISCOS.md e a seção 5.1 de docs/timbrador/etapa-2.md; esta tarefa segue aquela seção com as adaptações abaixo, que vêm das decisões G-01 a G-04.
