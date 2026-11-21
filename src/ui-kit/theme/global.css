@@ -1,5 +1,6 @@
 /* Estilo global do Guitarrero: Tailwind local + tokens Dark Studio. Importado pelo src/main.tsx. */
-@import "tailwindcss";
+/* source("../..") = só src/ é varrida atrás de classes: os protótipos em docs/ têm classes próprias. */
+@import "tailwindcss" source("../..");
 @import "./tokens.css";
 
 @layer base {
