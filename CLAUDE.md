@@ -17,6 +17,9 @@ A pasta docs/ é mantida pelo gestor do projeto (Claude, no Projeto Guitarrero d
 
 ## Stack
 Tauri v2 · React · Vite · TypeScript strict (strict, noUncheckedIndexedAccess, exactOptionalPropertyTypes, sem any) · Tailwind CSS v4 local (@tailwindcss/vite) · lucide-react · zod · zustand · Vitest · Web Audio API. Alvo: só Windows (.msi/.exe). Dependências com versão exata (sem ^ nem ~) e lockfiles commitados.
+- TypeScript: a versão mais recente que o typescript-eslint aceita (em novembro de 2026, a série 6.0; o TypeScript 7 entra quando ele suportar).
+- pnpm 11 ou mais novo: a configuração do projeto fica no pnpm-workspace.yaml (saveExact e allowBuilds, a lista de pacotes autorizados a rodar script de instalação). O .npmrc serve só para registro e login, e o campo "pnpm" do package.json é ignorado.
+- Versões que não funcionam juntas: fixe a combinação mais recente que funciona e registre o motivo no relatório da etapa. Isso não é trocar a stack.
 
 ## Arquitetura (ADR-004 e ADR-006)
 ```
@@ -53,7 +56,7 @@ Quem pode importar quem (ESLint no-restricted-imports; aliases @app, @ui-kit, @c
 - app: ui-kit, core e a porta pública de cada módulo (@modules/timbre, @modules/tab).
 - Um módulo nunca importa o outro: o que os dois usam mora em core.
 - @tauri-apps/* só nas camadas persistence; fetch só em services.
-- Entre camadas, use os aliases; caminho relativo só dentro da mesma camada.
+- Import que sai da própria pasta (../) usa sempre o alias; caminho relativo só com ./, dentro da mesma pasta. Assim as regras acima valem só para aliases e pacotes.
 
 ## Comandos
 - pnpm install: instala as dependências
@@ -63,7 +66,7 @@ Quem pode importar quem (ESLint no-restricted-imports; aliases @app, @ui-kit, @c
 
 ## Como trabalhar
 - Pasta oficial no PC do Link: F:\Claude Code\Guitarreiro (este repositório). Tudo o que for criado para o software (código, builds, amostras de teste, exportações) fica dentro dela; nada fora.
-- Pastas locais não versionadas: _instalacao/ (instalador e registros da instalação; não mexa) e _relatorios/ (onde você grava o relatório de cada etapa).
+- Pastas locais não versionadas: _instalacao/ (instalador e registros da instalação; não mexa), _relatorios/ (onde você grava o relatório de cada etapa) e _scaffold_tmp/ (arquivos temporários; apague a pasta ao terminar a tarefa).
 - Cada etapa trabalha numa branch própria (ex.: etapa-3-base). Nada de push direto na main, force push ou git reset --hard: o gestor confere o CI e incorpora a branch.
 - Use só comandos não interativos: o terminal do agente não responde perguntas.
 - Toda fórmula nova ou migrada ganha teste com valor de referência do protótipo.

@@ -83,6 +83,7 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 | Tom detectado errado no TAB (T-01) | Alta | Dossiê e pacote ao Timbre errados | Corrigir com perfis de tonalidade na Etapa 6, com teste |
 | Perder contexto entre sessões | Média | Retrabalho | Este documento + Memória do Projeto + CLAUDE.md no repositório |
 | Limite de uso do plano no meio de uma etapa longa (esforço máximo) | Média | Etapa para no meio | Prompts retomáveis: a branch da etapa e o relatório em _relatorios\ dizem onde parou; basta colar o mesmo prompt de novo |
+| Versões novas das ferramentas que mudam a configuração ou não funcionam juntas (ex.: pnpm 11/12 só lê o pnpm-workspace.yaml; TypeScript 7 ainda sem suporte no typescript-eslint) | Média | Etapa trava na instalação ou no lint | O gestor confere as versões atuais na documentação oficial antes de cada prompt; o CLAUDE.md manda fixar a combinação mais recente que funciona junta e registrar no relatório |
 
 ## 5. Backlog fora da v1.0
 
@@ -104,3 +105,4 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 - 21/11/2026 — Instalador automático INSTALAR_GUITARRERO.ps1 e PROMPT_ETAPA_3.txt gravados em F:\Claude Code\Guitarreiro\_instalacao (sintaxe conferida); pasta _instalacao/ no .gitignore do repositório.
 - 21/11/2026 — Link conclui a preparação do PC: o instalador automático deu OK nos 9 itens e o repositório foi baixado em F:\Claude Code\Guitarreiro.
 - 21/11/2026 — G-09 (Regra 0) registrada nas Instruções, na Memória e no CLAUDE.md. Prompt da Etapa 3 revisado e blindado (revisão 2): retomada automática, pasta temporária para o template, comandos não interativos, CSP com o canal interno do Tauri e política de desenvolvimento, fim de linha LF, versões exatas, prova das regras de camada, branch etapa-3-base, relatório em _relatorios\ e verificação do título da janela. CLAUDE.md reescrito com ADR-006; .gitattributes, .npmrc e .gitignore no repositório. D-09 aberta para a Fatia 1.
+- 21/11/2026 — Prompt da Etapa 3 ajustado às versões atuais das ferramentas, conferidas nas documentações oficiais: pnpm 11 e 12 (configuração só no pnpm-workspace.yaml, que substitui o .npmrc no repositório; scripts de instalação autorizados em allowBuilds), TypeScript na série 6.0 enquanto o typescript-eslint não aceitar o 7, Node 22 ou mais novo e conferência automática da janela pelo protocolo de depuração do WebView2, no build de debug e no modo de desenvolvimento. CLAUDE.md: import que sai da própria pasta (../) usa sempre o alias.
