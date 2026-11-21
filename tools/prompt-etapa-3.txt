@@ -1,0 +1,19 @@
+﻿Execute a Etapa 3 do Guitarrero: criar a base do repositório, sem nenhuma funcionalidade ainda. Trabalhe só dentro de F:\Claude Code\Guitarreiro, a pasta oficial do projeto, que é este repositório; não crie nada fora dela. A pasta _instalacao/ guarda o instalador e os registros da instalação: não mexa nela e mantenha a linha _instalacao/ no .gitignore. Leia antes o CLAUDE.md, docs/guitarrero/05_PLANO_MESTRE_DECISOES_E_RISCOS.md e a seção 5.1 de docs/timbrador/etapa-2.md; esta tarefa segue aquela seção com as adaptações abaixo, que vêm das decisões G-01 a G-04.
+
+Faça, nesta ordem:
+1. Crie o app Tauri v2 com o template React + TypeScript + Vite dentro deste repositório, sem apagar CLAUDE.md nem docs/. Antes, se CLAUDE.md e docs/ ainda não estiverem commitados, faça um primeiro commit só com eles ("docs: pacote inicial do Guitarrero"). Nome do produto "Guitarrero", identificador com.linkozitos.guitarrero, janela mínima 1280 × 800.
+2. Configure o TypeScript estrito (strict, noUncheckedIndexedAccess, exactOptionalPropertyTypes), ESLint com typescript-eslint strict, no-explicit-any como erro e no-restricted-imports aplicando as regras de camada do CLAUDE.md; configure o Prettier.
+3. Instale Tailwind como pacote local com os tokens do design system Dark Studio da seção 4.1 da Etapa 2 em src/app/theme/tokens.css; instale lucide-react, zod, zustand, @tauri-apps/plugin-fs e @tauri-apps/plugin-dialog com versões travadas.
+4. Configure a CSP e as capabilities do Tauri conforme o ADR-005 da Etapa 2 (rede só para https://noembed.com e frame só para https://www.youtube-nocookie.com; sistema de arquivos só em $APPDATA/guitarrero e em arquivos escolhidos pelo usuário).
+5. Crie a árvore src/core, src/modules/timbre, src/modules/tab e src/app descrita no CLAUDE.md. Dentro de src/modules/timbre, reproduza as subpastas da árvore da seção 1.1 da Etapa 2, movendo para src/core o que for comum aos dois módulos (afinações, MIDI, Karplus-Strong, extração de links, persistência). Cada pasta recebe um index.ts vazio com um comentário de uma linha dizendo o que vai morar ali.
+6. Crie o shell mínimo: uma janela com título "Guitarrero" e dois botões de navegação, "Timbre" e "TAB", cada um abrindo uma tela vazia com o texto "Em construção — Etapa 4" ou "Etapa 6".
+7. Configure o Vitest (ambiente node para core e domain) com um teste de exemplo real: midiToFreqHz(69) = 440 e midiToFreqHz(40) = 82,4 (com a função em src/core/music, igual à do protótipo TAB Simplifier).
+8. Crie os scripts lint, typecheck, test, tauri dev e tauri build no package.json.
+9. Crie o CI no GitHub Actions: lint + typecheck + test em ubuntu-latest; tauri build em windows-latest, publicando o instalador como artefato. Sem macOS (decisão G-04).
+10. Atualize o README com como rodar em modo de desenvolvimento no Windows.
+
+Critério de pronto: pnpm lint, pnpm typecheck e pnpm test passam; pnpm tauri dev abre a janela Guitarrero com os dois botões. Rode os três comandos de verificação e mostre a saída. Faça commits pequenos por item, em português. No fim, envie tudo ao GitHub com git push; se o Git pedir login, avise o Link que uma janela do navegador vai abrir para ele entrar na conta do GitHub, e espere ele confirmar.
+
+Se algo falhar por causa do ambiente do Windows (Rust, compilador C++, WebView2), pare, explique o erro em linguagem simples e diga exatamente qual comando o Link deve rodar para corrigir; não tente contornar mudando a stack.
+
+Ao terminar, escreva para o Link: o que foi criado, o que ele deve ver na tela e o que fazer se não abrir.

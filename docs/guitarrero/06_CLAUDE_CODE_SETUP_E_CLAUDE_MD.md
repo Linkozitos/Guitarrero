@@ -2,6 +2,14 @@
 
 Documento de execução · 21/11/2026 · Use só depois do portão G0 (decisões do 05 respondidas).
 
+## Caminho automático (recomendado, desde 21/11)
+
+O Claude gravou em F:\Claude Code\Guitarreiro\_instalacao dois arquivos: INSTALAR_GUITARRERO.ps1 (faz as Partes A e C sozinho) e PROMPT_ETAPA_3.txt (o prompt da Etapa 3). Abra o PowerShell normal (sem administrador) e cole esta linha:
+
+`powershell -ExecutionPolicy Bypass -File "F:\Claude Code\Guitarreiro\_instalacao\INSTALAR_GUITARRERO.ps1"`
+
+O script instala e confere Git, Node.js, pnpm, compilador C++, Rust, WebView2 e Claude Code, pulando o que já existir; baixa o repositório na pasta oficial; mostra uma tabela OK/FALHOU; e, se tudo estiver OK, copia o prompt da Etapa 3 e abre o Claude Code. Aí basta Ctrl+V e Enter. As Partes A e C abaixo ficam como caminho manual de reserva.
+
 ## Parte A — Preparar o seu PC (seu papel, uma vez só)
 
 ### O que vai acontecer e por que é seguro
