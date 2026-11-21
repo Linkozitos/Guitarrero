@@ -6,10 +6,10 @@ Registro oficial do projeto. Atualizado pelo Claude a cada entrega. Última atua
 
 | Campo | Valor |
 |---|---|
-| Etapa atual | Etapa 0 — Configuração do Claude (decisões aprovadas em 21/11) |
-| Último portão aprovado | Nenhum desde a Etapa 1 do Timbrador (17/11) |
-| Bloqueio | Nenhuma decisão pendente. Faltam 2 ações do Link: colar o 01 em Instruções e instalar os pré-requisitos do 06 (Parte A) |
-| Próximo passo | Link: as 2 ações acima. Depois: prompt da Etapa 3 no Claude Code (doc 06, Parte C) |
+| Etapa atual | Etapa 3 — Setup do repositório (aguardando a preparação do PC) |
+| Último portão aprovado | G0 — Configuração concluída (21/11) |
+| Bloqueio | Nenhuma decisão pendente. Falta 1 ação do Link: instalar os pré-requisitos do 06 (Parte A) |
+| Próximo passo | Link: a ação acima e mandar o print das verificações. Depois: prompt da Etapa 3 no Claude Code (doc 06, Parte C) |
 
 ## 2. Roadmap com portões
 
@@ -94,3 +94,4 @@ P = pequeno (1 sessão), M = médio (2 a 3 sessões), G = grande (4 ou mais sess
 - 21/11/2026 — Gemini sai do projeto (G-05). Produto passa a se chamar Guitarrero e une os dois apps. Claude assume a gestão. Documentos 00 a 06 criados. Confirmado que D-01, D-02, D-04 e D-05 seguem presentes no Tone Lab v7.5.
 - 21/11/2026 — Link aprova G-02, G-03, G-04 e as 6 pendências da Etapa 2. Com D-02 aprovada, o agudo da BOMGE passa a 7.500 Hz (a Etapa 1 original fica como registro histórico). Gravação direta no GitHub recusada (o Claude não tem acesso de escrita à conta Linkozitos); arquivos entregues no pacote Guitarrero_pacote_inicial_repositorio.zip.
 - 21/11/2026 — Repositório renomeado para Guitarrero; app do Claude instalado no GitHub só para esse repositório; CLAUDE.md, docs e protótipos gravados na branch main (PR #1). O zip passa a ser só uma cópia de reserva.
+- 21/11/2026 — Instruções coladas e salvas pelo Claude no Projeto Guitarrero. Portão G0 concluído: Instruções, Contexto (5 arquivos), Memória e GitHub configurados.
