@@ -1,0 +1,50 @@
+/*
+ * Tokens do Design System Dark Studio (Etapa 2, seção 4.1).
+ * Os padrões do Tailwind são zerados: só existem as cores, os espaçamentos, os raios e as fontes
+ * do projeto. Assim as cores proibidas em texto (#94a3b8, #64748b, #fb7185 e #a78bfa) nem existem.
+ * Escala de texto: a padrão do Tailwind cobre a especificação (corpo 14/20 = text-sm,
+ * legenda 12/16 = text-xs, título de bloco 20/28 = text-xl).
+ */
+@theme {
+  /* Cores (prefixo --color-: geram classes como bg-bg-0 e text-fg-1). */
+  --color-*: initial;
+  --color-bg-0: #07090e; /* fundo da janela */
+  --color-bg-1: #0f141d; /* superfície de bloco */
+  --color-bg-2: #161d2a; /* cards, campos, modais */
+  --color-fg-1: #f1f5f9; /* texto principal (18,2:1 sobre bg-0) */
+  --color-fg-2: #cbd5e1; /* texto secundário (11,4:1 sobre bg-2) */
+  --color-fg-3: #a8b4c6; /* legendas e marcas de escala (8,1:1 sobre bg-2) */
+  --color-accent-amber: #fbbf24; /* knobs, ponteiro, seleção e foco */
+  --color-accent-emerald: #34d399; /* ON, aumento no Delta */
+  --color-accent-cyan: #22d3ee; /* categoria Grunge, simulador */
+  --color-accent-rose: #fda4af; /* categoria Punk, alertas */
+  --color-accent-violet: #c4b5fd; /* categoria Metal */
+  --color-on-amber: #07090e; /* texto sobre amber (botões preenchidos) */
+
+  /*
+   * Grade de 8 pt: 8, 16, 24, 32, 48 e 64 px; 4 px (meio passo) só dentro de componentes.
+   * Os nomes seguem a escala do Tailwind (p-2 = 8 px, p-4 = 16 px...), mas valores fora
+   * da grade (como p-3 = 12 px) deixam de existir.
+   */
+  --spacing-*: initial;
+  --spacing-0: 0px;
+  --spacing-1: 4px; /* meio passo: só dentro de componentes */
+  --spacing-2: 8px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px; /* alvo mínimo de clique: 40 x 40 px */
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+
+  /* Raios 8, 12 e 16 px, com os nomes do Tailwind para esses valores. */
+  --radius-*: initial;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+
+  /* Fontes do sistema; nada é carregado da internet. */
+  --font-*: initial;
+  --font-sans: system-ui, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
