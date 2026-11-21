@@ -1,0 +1,5 @@
+# Configuração do pnpm para o Guitarrero.
+# Desde o pnpm 11, as configurações do pnpm ficam neste arquivo; o .npmrc serve só para registro e login.
+
+# Versões exatas no package.json (sem ^ nem ~): o app não muda sozinho quando sai versão nova de uma dependência.
+saveExact: true
